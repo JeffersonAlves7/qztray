@@ -1,0 +1,37 @@
+*{
+    font-family: Arial, Helvetica, sans-serif;
+    color: aliceblue;
+}
+
+body{
+    min-height: 100vh;
+    background-color: rgb(50, 50, 50);
+}
+
+body > div{
+    transform: scale(2);
+
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-direction: column;
+}
+
+ul{
+    border-bottom: 1px solid gray;
+    padding-bottom: .4rem;
+}
+
+ul > li{
+    text-align: center;
+}
+
+#imprimir{
+    color: black;
+}
+
+#imprimir:hover{
+    cursor: pointer
+}
