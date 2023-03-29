@@ -30,10 +30,20 @@ function findPrinters() {
 printButton.onclick = async () => {
     console.log('imprimir')
     try{
-        const printer = await qz.printers.find("ZDesigner ZD220-203dpi ZPL")
+        const printer = await qz.printers.find("Microsoft XPS Document Writer")
         var config = qz.configs.create(printer);       // Create a default config for the found printer
-        var data = ['^XA^FO50,50^ADN,36,20^FDRAW ZPL EXAMPLE^FS^XZ'];   // Raw ZPL
+        // var data = ['^XA^FO50,50^ADN,36,20^FDRAW ZPL EXAMPLE^FS^XZ'];   // Raw ZPL
+        const data = [
+            {
+                type: 'pixel',
+                format: 'pdf',
+                flavor: 'file',
+                data: 'assets/14323982_1.pdf' 
+            }
+        ]
         return qz.print(config, data);
     }
-    catch(e){ }
+    catch(e){
+        console.log(e)
+     }
 }
