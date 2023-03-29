@@ -1,17 +1,17 @@
 const printButton = document.getElementById('imprimir')
+const impressoraName = "CUPS-BRF-Printer"
 
 try {
     qz.websocket.connect().then(() => {
-        alert("connected")
-	findPrinters()
+        findPrinters()
     })
 }
 catch (e) { }
 
 function displayMessage(message) {
-	const ul = document.querySelector("ul")
-	console.log({ul, message})
-	ul.innerHTML = message
+    const ul = document.querySelector("ul")
+    console.log({ ul, message })
+    ul.innerHTML = message
 }
 
 function findPrinters() {
@@ -29,8 +29,8 @@ function findPrinters() {
 
 printButton.onclick = async () => {
     console.log('imprimir')
-    try{
-        const printer = await qz.printers.find("Microsoft XPS Document Writer")
+    try {
+        const printer = await qz.printers.find(impressoraName)
         var config = qz.configs.create(printer);       // Create a default config for the found printer
         // var data = ['^XA^FO50,50^ADN,36,20^FDRAW ZPL EXAMPLE^FS^XZ'];   // Raw ZPL
         const data = [
@@ -38,12 +38,12 @@ printButton.onclick = async () => {
                 type: 'pixel',
                 format: 'pdf',
                 flavor: 'file',
-                data: 'assets/14323982_1.pdf' 
+                data: 'assets/14323982_1.pdf'
             }
         ]
         return qz.print(config, data);
     }
-    catch(e){
+    catch (e) {
         console.log(e)
-     }
+    }
 }
