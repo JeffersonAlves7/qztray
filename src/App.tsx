@@ -1,38 +1,20 @@
 import qz from 'qz-tray'
 import { useEffect, useState } from 'react'
 
-const impressoraName = ""
+const impressoraName = "Microsoft XPS Document Writer"
 
 function App() {
   const [impressoras, setImpressoras] = useState<string[]>([])
 
-  function imprimir(){
-    qz.websocket.connect()
-      .then(() => {
-        return qz.printers.find()
-      })
-      .then((printers: string[]) => {
-        const config  = qz.configs.create(
-          impressoraName || printers.filter(printer => printer.toLowerCase().includes("zebra"))[0]
-        )
-        return qz.print(config, [{
-          type: 'pixel',
-          format: ' html',
-          flavor: 'plain',
-          data: (document.querySelector("ul")?.innerHTML)
-        }])
-      })
-      .then(() => {
-        return qz.websocket.disconnect()
-      })
-      .then(() => {
-        //  process.exit(0)
-      })
-      .catch((err: any) => {
-        console.error(err ?? "Erro")
-      })
+  async function imprimir() {
+    try{
+      console.log(document.querySelector("ul")?.innerHTML)
+      const printer = await qz.printers.find(impressoraName)
+      const config = qz.configs.create(printer)
+      await qz.print(config, ['^XA^FO50,50^ADN,36,20^FDRAW ZPL EXAMPLE^FS^XZ'])
+    }
+    catch(e){}
   }
-
 
   useEffect(() => {
     qz.websocket.connect()
@@ -41,10 +23,6 @@ function App() {
       })
       .then((printers: string[]) => {
         setImpressoras(printers)
-        return qz.websocket.disconnect()
-      })
-      .then(() => {
-        //  process.exit(0)
       })
       .catch((err: any) => {
         console.error(err ?? "Erro")
