@@ -8,12 +8,13 @@ async function imprimir() {
   try {
     const printer = await qz.printers.find(impressoraName)
     var config = qz.configs.create(printer);       // Create a default config for the found printer
+    // var data = ['^XA^FO50,50^ADN,36,20^FDRAW ZPL EXAMPLE^FS^XZ'];   // Raw ZPL
     const data = [
       {
         type: 'pixel',
         format: 'pdf',
         flavor: 'file',
-        data: '/14323982_1.pdf'
+        data: 'http://localhost:3000/pdf'
       }
     ]
     return qz.print(config, data);
